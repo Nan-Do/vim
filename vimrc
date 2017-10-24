@@ -165,7 +165,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
 " Type z/ to toggle highlighting on/off.
-nnoremap <C-H> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+nnoremap <leader>h :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 function! AutoHighlightToggle()
     let @/ = ''
     if exists('#auto_highlight')
@@ -185,4 +185,6 @@ function! AutoHighlightToggle()
     endif
 endfunction
 
-let g:jedi#use_splits_not_buffers = "bottom"
+" Jedi-vim options
+let g:jedi#use_splits_not_buffers = "left"
+autocmd FileType python setlocal completeopt-=preview
