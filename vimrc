@@ -15,7 +15,7 @@ Plugin 'gmarik/Vundle.vim'
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
 Plugin 'w0rp/ale'
-Plugin 'Valloric/YouCompleteMe'
+" Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-sensible'
 Plugin 'Lokaltog/vim-powerline'
 Plugin 'jnurmine/Zenburn'
@@ -27,6 +27,10 @@ Plugin 'Shougo/neosnippet'
 Plugin 'Shougo/neosnippet-snippets'
 Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'tmhedberg/SimpylFold'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -73,6 +77,7 @@ set shiftwidth=4
 set cursorline
 
 " show the matching part of the pair for [] {} and ()
+hi MatchParen ctermbg=blue
 set showmatch
 
 " enable all Python syntax highlighting features
@@ -85,9 +90,9 @@ noremap <Leader>e :quit<CR>
 noremap <Leader>E :qa!<CR>
 
 " YouCompleteMe options
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-let g:ycm_python_binary_path = 'python'
+"let g:ycm_autoclose_preview_window_after_completion=1
+"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+"let g:ycm_python_binary_path = 'python'
 
 " NERDTree options
 map <leader>t :NERDTreeToggle<CR>
@@ -156,3 +161,28 @@ endif
 
 " For java autocompletion
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" Highlight all instances of word under cursor, when idle.
+" Useful when studying strange source code.
+" Type z/ to toggle highlighting on/off.
+nnoremap <C-H> :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+function! AutoHighlightToggle()
+    let @/ = ''
+    if exists('#auto_highlight')
+        au! auto_highlight
+        augroup! auto_highlight
+        setl updatetime=4000
+        echo 'Highlight current word: off'
+        return 0
+    else
+        augroup auto_highlight
+            au!
+            au CursorHold * let @/ = '\V\<'.escape(expand('<cword>'), '\').'\>'
+        augroup end
+        setl updatetime=500
+        echo 'Highlight current word: ON'
+        return 1
+    endif
+endfunction
+
+let g:jedi#use_splits_not_buffers = "bottom"
