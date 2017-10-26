@@ -1,4 +1,4 @@
-let mapleader=" "
+let mapleader = " "
 
 set nocompatible              " required
 filetype off                  " required
@@ -17,7 +17,8 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'w0rp/ale'
 " Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-sensible'
-Plugin 'Lokaltog/vim-powerline'
+Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'jnurmine/Zenburn'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'scrooloose/nerdtree'
@@ -31,6 +32,7 @@ Plugin 'tmhedberg/SimpylFold'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'ervandew/supertab'
+Plugin 'Rip-Rip/clang_complete'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -43,7 +45,9 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " Easy navigation between tabs
-map <Leader>n <Esc>:tabprevious<CR>
+" This mapping conflicts with jedi vim
+" map <Leader>n <Esc>:tabprevious<CR>
+map <Leader>b <Esc>:tabprevious<CR>
 map <Leader>m <Esc>:tabnext<CR>
 
 set nu
@@ -186,5 +190,17 @@ function! AutoHighlightToggle()
 endfunction
 
 " Jedi-vim options
-let g:jedi#use_splits_not_buffers = "left"
+"let g:jedi#use_splits_not_buffers = "right"
+let g:jedi#use_tabs_not_buffers = 1
 autocmd FileType python setlocal completeopt-=preview
+
+" Set the relative and numering on
+set number
+set relativenumber
+
+" Configuration for the c/c++ autocompletion
+"let g:clang_library_path='/usr/lib/llvm-4.0/lib'
+let g:clang_library_path='/usr/lib/llvm-4.0/lib/libclang-4.0.1.so'
+
+" Powerline options
+let g:airline_powerline_fonts = 1
