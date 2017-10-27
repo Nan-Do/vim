@@ -1,45 +1,41 @@
 let mapleader = " "
 
-set nocompatible              " required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Manage plugins
+call plug#begin('~/.vim/plugged')
 
 " Add all your plugins here (note older versions of Vundle used Bundle instead of Plugin)
-Plugin 'w0rp/ale'
-" Plugin 'Valloric/YouCompleteMe'
-Plugin 'tpope/vim-sensible'
-Plugin 'bling/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'jnurmine/Zenburn'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'Shougo/neocomplete'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'tmhedberg/SimpylFold'
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'davidhalter/jedi-vim'
-Plugin 'ervandew/supertab'
-Plugin 'Rip-Rip/clang_complete'
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'w0rp/ale'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'ervandew/supertab'
+Plug 'tpope/vim-sensible'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'jnurmine/Zenburn'
+Plug 'altercation/vim-colors-solarized'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'jiangmiao/auto-pairs'
+Plug 'Rip-Rip/clang_complete'
+Plug 'tmhedberg/SimpylFold'
+Plug 'vim-scripts/indentpython.vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tpope/vim-rhubarb'
+
+call plug#end()
 
 "split navigations
 nnoremap <C-J> <C-W><C-J>
@@ -92,14 +88,17 @@ let python_highlight_all = 1
 
 " Some useful key combinations
 :imap jk <Esc>
+:vmap jk <Esc>
 noremap <Leader>s :update<CR>
 noremap <Leader>e :quit<CR>
 noremap <Leader>E :qa!<CR>
+" Remap changing the mode on the terminal
+if has("nvim")
+    :tnoremap <Esc> <C-\><C-n>
+endif
 
-" YouCompleteMe options
-"let g:ycm_autoclose_preview_window_after_completion=1
-"map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-"let g:ycm_python_binary_path = 'python'
+" Autoclose the documentation window when choosing an option
+autocmd CompleteDone * pclose
 
 " NERDTree options
 map <leader>t :NERDTreeToggle<CR>
@@ -144,7 +143,7 @@ autocmd! bufwritepost .vimrc source %
 "let g:EclimCompletionMethod = 'omnifunc'
 
 " Snippets configurarion
-let g:neocomplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -171,7 +170,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
-" Type z/ to toggle highlighting on/off.
+" Type leader<h> to toggle highlighting on/off.
 nnoremap <leader>h :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 function! AutoHighlightToggle()
     let @/ = ''
@@ -207,3 +206,6 @@ let g:clang_library_path='/usr/lib/llvm-4.0/lib/libclang-4.0.1.so'
 
 " Powerline options
 let g:airline_powerline_fonts = 1
+
+" Remove autopairs incompatibility
+let g:AutoPairsMapCR = 0
