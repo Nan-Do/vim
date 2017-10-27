@@ -9,9 +9,10 @@ Plug 'w0rp/ale'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+   Plug 'Shougo/neocomplete'
 endif
 
 Plug 'ervandew/supertab'
@@ -143,7 +144,12 @@ autocmd! bufwritepost .vimrc source %
 "let g:EclimCompletionMethod = 'omnifunc'
 
 " Snippets configurarion
-let g:deoplete#enable_at_startup = 1
+if has('nvim')
+    let g:deoplete#enable_at_startup = 1
+else
+    let g:neocomplete#enable_at_startup = 1
+endif
+
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
