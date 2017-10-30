@@ -93,6 +93,13 @@ let python_highlight_all = 1
 noremap <Leader>s :update<CR>
 noremap <Leader>e :quit<CR>
 noremap <Leader>E :qa!<CR>
+
+" Remap keys to easily resize splits as in tmux
+nnoremap <C-up> <C-W>+
+nnoremap <C-down> <C-W>-
+nnoremap <C-left> <C-W><
+nnoremap <C-right> <C-W>>
+
 " Remap changing the mode on the terminal
 if has("nvim")
     :tnoremap <Esc> <C-\><C-n>
@@ -128,6 +135,9 @@ set clipboard=unnamed
 " =======[ Make the 81st column stand out ]===========
 highlight ColorColumn ctermbg=magenta
 call matchadd('ColorColumn', '\%81v', 100)
+
+" Option to work properly with tmux
+" set term=screen-256color
 
 " Set the color theme if the terminal supports 256 colors
 if &t_Co == 256 || has('gui_running')
