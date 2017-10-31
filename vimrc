@@ -36,7 +36,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-rhubarb'
 Plug 'szw/vim-maximizer'
-
+Plug 'vim-scripts/taglist.vim'
 call plug#end()
 
 "split navigations
@@ -226,3 +226,7 @@ let g:airline_powerline_fonts = 1
 
 " Remove autopairs incompatibility
 let g:AutoPairsMapCR = 0
+
+" Options for the tags plugin
+let Tlist_Use_Right_Window = 1
+nnoremap <Leader>y :TlistToggle<CR>
