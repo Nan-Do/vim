@@ -35,6 +35,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-rhubarb'
+Plug 'szw/vim-maximizer'
 
 call plug#end()
 
