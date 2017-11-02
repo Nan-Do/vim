@@ -37,6 +37,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tpope/vim-rhubarb'
 Plug 'szw/vim-maximizer'
 Plug 'vim-scripts/taglist.vim'
+Plug 'christoomey/vim-tmux-navigator'
+
 call plug#end()
 
 "split navigations
