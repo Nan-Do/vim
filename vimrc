@@ -105,7 +105,8 @@ nnoremap <C-right> <C-W>>
 
 " Remap changing the mode on the terminal
 if has("nvim")
-    :tnoremap <Esc> <C-\><C-n>
+    ":tnoremap <Esc> <C-\><C-n>
+    :tnoremap jk <C-\><C-n>
 endif
 
 " Autoclose the documentation window when choosing an option
