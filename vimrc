@@ -50,8 +50,9 @@ nnoremap <C-H> <C-W><C-H>
 " Easy navigation between tabs
 " This mapping conflicts with jedi vim
 " map <Leader>n <Esc>:tabprevious<CR>
-map <Leader>b <Esc>:tabprevious<CR>
-map <Leader>m <Esc>:tabnext<CR>
+map <Leader>u <Esc>:tabprevious<CR>
+map <Leader>i <Esc>:tabnext<CR>
+
 
 set nu
 set encoding=utf-8
