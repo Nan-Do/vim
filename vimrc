@@ -53,6 +53,8 @@ nnoremap <C-H> <C-W><C-H>
 map <Leader>u <Esc>:tabprevious<CR>
 map <Leader>i <Esc>:tabnext<CR>
 
+" Option to store all the swapfiles in the same directory
+set directory=$HOME/.vim/swapfiles/
 
 set nu
 set encoding=utf-8
@@ -103,6 +105,15 @@ nnoremap <C-up> <C-W>+
 nnoremap <C-down> <C-W>-
 nnoremap <C-left> <C-W><
 nnoremap <C-right> <C-W>>
+
+" Make vim work properly when executed on tmux (nvim works properly)
+if &term =~ '^screen'
+    " tmux will send xterm-style keys when xterm-keys is on
+    execute "set <xUp>=\e[1;*A"
+    execute "set <xDown>=\e[1;*B"
+    execute "set <xRight>=\e[1;*C"
+    execute "set <xLeft>=\e[1;*D"
+endif
 
 " Remap changing the mode on the terminal
 if has("nvim")
