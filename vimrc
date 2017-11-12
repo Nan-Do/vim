@@ -38,6 +38,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'szw/vim-maximizer'
 Plug 'vim-scripts/taglist.vim'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tpope/vim-commentary'
 
 call plug#end()
 
@@ -230,7 +231,7 @@ autocmd FileType python setlocal completeopt-=preview
 
 " Set the relative and numering on
 set number
-set relativenumber
+" set relativenumber
 
 " Configuration for the c/c++ autocompletion
 "let g:clang_library_path='/usr/lib/llvm-4.0/lib'
@@ -245,3 +246,6 @@ let g:AutoPairsMapCR = 0
 " Options for the tags plugin
 let Tlist_Use_Right_Window = 1
 nnoremap <Leader>y :TlistToggle<CR>
+
+" Key shortcut for the maximizer plugin
+nnoremap <C-O> :MaximizerToggle<CR>
