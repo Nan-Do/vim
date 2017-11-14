@@ -248,4 +248,4 @@ let Tlist_Use_Right_Window = 1
 nnoremap <Leader>y :TlistToggle<CR>
 
 " Key shortcut for the maximizer plugin
-nnoremap <C-O> :MaximizerToggle<CR>
+nnoremap <Leader>o :MaximizerToggle<CR>
