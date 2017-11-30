@@ -39,6 +39,7 @@ Plug 'szw/vim-maximizer'
 Plug 'vim-scripts/taglist.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-commentary'
+Plug 'pangloss/vim-javascript'
 
 call plug#end()
 
@@ -249,3 +250,9 @@ nnoremap <Leader>y :TlistToggle<CR>
 
 " Key shortcut for the maximizer plugin
 nnoremap <Leader>o :MaximizerToggle<CR>
+
+" Set the options to set Gdiff on a vertical window with filler lines
+set diffopt+=vertical,filler
+
+" key shortcut for pastemode
+set pastetoggle=<F2>
