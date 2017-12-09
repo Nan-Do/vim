@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=/home/fernando/.oh-my-zsh
+export ZSH=/home/nando/.oh-my-zsh
 
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
@@ -58,7 +58,7 @@ ZSH_THEME="robbyname"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git web-search vi-mode zsh-syntax-highlighting)
+plugins=(git web-search vi-mode zsh-syntax-highlighting pyenv ubuntu)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -112,3 +112,4 @@ bindkey '^r' history-incremental-search-backward
 
 # zle -N zle-line-init
 # zle -N zle-keymap-select
+alias vv="tmux new-session \; split-window -h \; attach"
