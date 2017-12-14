@@ -9,18 +9,14 @@ Plug 'w0rp/ale'
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
-"  Plug 'Shougo/deoplete.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-   Plug 'Shougo/neocomplete'
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-Plug 'ervandew/supertab'
 Plug 'tpope/vim-sensible'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'jnurmine/Zenburn'
-Plug 'altercation/vim-colors-solarized'
 Plug 'scrooloose/nerdtree'
 Plug 'kien/ctrlp.vim'
 Plug 'Shougo/neosnippet'
@@ -31,6 +27,7 @@ Plug 'Rip-Rip/clang_complete'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'davidhalter/jedi-vim'
+Plug 'zchee/deoplete-jedi'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -40,6 +37,16 @@ Plug 'vim-scripts/taglist.vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
+Plug 'lervag/vimtex'
+
+" Color schemes
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'jnurmine/zenburn'
+Plug 'altercation/vim-colors-solarized'
+Plug 'morhetz/gruvbox'
+Plug 'jacoborus/tender.vim'
+Plug 'gosukiwi/vim-atom-dark'
+Plug 'dracula/vim'
 
 call plug#end()
 
@@ -161,10 +168,15 @@ call matchadd('ColorColumn', '\%81v', 100)
 if &t_Co == 256 || has('gui_running')
     " Set the background to dark, and which scheme to use.
     set background=dark
-    colors zenburn "delek desert, koehler, pablo, slate, torte...kk
+    colors hybrid_material
 else
     colors peachpuff
 endif
+
+if has("nvim")
+    set termguicolors
+endif
+
 
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
@@ -172,11 +184,24 @@ autocmd! bufwritepost .vimrc source %
 "let g:EclimCompletionMethod = 'omnifunc'
 
 " Snippets configurarion
-if has('nvim')
-    let g:deoplete#enable_at_startup = 1
-else
-    let g:neocomplete#enable_at_startup = 1
-endif
+let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_smart_case = 1
+let g:deoplete#complete_method = 'completefunc'
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#close_popup() . "\<CR>"
+endfunction
+
+" Let <Tab> also do completion
+inoremap <silent><expr> <Tab>
+\ pumvisible() ? "\<C-n>" :
+\ deoplete#mappings#manual_complete()
 
 " Plugin key-mappings.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
