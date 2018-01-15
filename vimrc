@@ -14,6 +14,7 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
+Plug 'ervandew/supertab'
 Plug 'tpope/vim-sensible'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -216,8 +217,8 @@ imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " \ pumvisible() ? "\<C-n>" :
 " \ neosnippet#expandable_or_jumpable() ?
 " \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+"             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
@@ -261,7 +262,7 @@ set number
 
 " Configuration for the c/c++ autocompletion
 "let g:clang_library_path='/usr/lib/llvm-4.0/lib'
-let g:clang_library_path='/usr/lib/llvm-4.0/lib/libclang-4.0.1.so'
+let g:clang_library_path=''
 
 " Powerline options
 let g:airline_powerline_fonts = 1
@@ -281,3 +282,9 @@ set diffopt+=vertical,filler
 
 " key shortcut for pastemode
 set pastetoggle=<F2>
+
+" Let nerdtree know that we dont want to show pyc files
+let NERDTreeIgnore = ['\.pyc$']
+
+" Show the pressed key on the status bar (by default on nvim)
+set showcmd
