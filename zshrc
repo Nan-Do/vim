@@ -58,7 +58,7 @@ ZSH_THEME="robbyname"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git web-search vi-mode zsh-syntax-highlighting pyenv ubuntu)
+plugins=(git web-search vi-mode zsh-syntax-highlighting pyenv ubuntu colorize)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -113,3 +113,6 @@ bindkey '^r' history-incremental-search-backward
 # zle -N zle-line-init
 # zle -N zle-keymap-select
 alias vv="tmux new-session \; split-window -h \; attach"
+
+# Avoid sharing the history between active sessions
+unsetopt share_history
