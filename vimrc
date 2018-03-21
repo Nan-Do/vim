@@ -16,6 +16,7 @@ endif
 
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
 Plug 'bling/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/nerdtree'
@@ -127,8 +128,9 @@ endif
 
 " Remap changing the mode on the terminal
 if has("nvim")
-    ":tnoremap <Esc> <C-\><C-n>
-    :tnoremap jk <C-\><C-n>
+    " :tnoremap <Esc> <C-\><C-n>
+    " :tnoremap jk <C-\><C-n>
+    :tnoremap qq <C-\><C-n>
 endif
 
 " Autoclose the documentation window when choosing an option
@@ -150,8 +152,8 @@ let g:ale_python_flake8_options = '-m flake8'
 vnoremap <Leader>s :sort<CR>
 
 " Easier move of blocks
-vnoremap < <gv
-vnoremap > >gv
+" vnoremap < <gv
+" vnoremap > >gv
 
 " Make the mouse work
 set mouse=a
@@ -288,3 +290,6 @@ let NERDTreeIgnore = ['\.pyc$']
 
 " Show the pressed key on the status bar (by default on nvim)
 set showcmd
+
+" Update the highlighting of the last search
+nnoremap <leader>l :set noh<CR>
