@@ -292,4 +292,4 @@ let NERDTreeIgnore = ['\.pyc$']
 set showcmd
 
 " Update the highlighting of the last search
-nnoremap <leader>l :set noh<CR>
+nnoremap <leader>l :nohl<CR>
