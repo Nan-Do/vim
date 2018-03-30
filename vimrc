@@ -105,8 +105,8 @@ set showmatch
 let python_highlight_all = 1
 
 " Some useful key combinations
-:imap jk <Esc>
-:vmap jk <Esc>
+:inoremap jk <Esc>
+" :vnoremap jk <Esc>
 noremap <Leader>s :update<CR>
 noremap <Leader>e :quit<CR>
 noremap <Leader>E :qa!<CR>
