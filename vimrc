@@ -8,6 +8,7 @@ Plug 'w0rp/ale'
 
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  Plug 'zchee/deoplete-jedi'
 else
   Plug 'Shougo/deoplete.nvim'
   Plug 'roxma/nvim-yarp'
@@ -24,12 +25,11 @@ Plug 'kien/ctrlp.vim'
 Plug 'Shougo/neosnippet'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'artur-shaik/vim-javacomplete2'
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
 Plug 'Rip-Rip/clang_complete'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'davidhalter/jedi-vim'
-Plug 'zchee/deoplete-jedi'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -40,6 +40,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'lervag/vimtex'
+Plug 'fatih/vim-go'
+Plug 'nsf/gocode', { 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh'  }
+" Plug 'Yggdroot/indentLine'
 
 " Color schemes
 Plug 'kristijanhusak/vim-hybrid-material'
@@ -49,6 +52,8 @@ Plug 'morhetz/gruvbox'
 Plug 'jacoborus/tender.vim'
 Plug 'gosukiwi/vim-atom-dark'
 Plug 'dracula/vim'
+
+Plug 'ryanoasis/vim-devicons'
 
 call plug#end()
 
@@ -128,9 +133,8 @@ endif
 
 " Remap changing the mode on the terminal
 if has("nvim")
-    " :tnoremap <Esc> <C-\><C-n>
-    " :tnoremap jk <C-\><C-n>
-    :tnoremap qq <C-\><C-n>
+    :tnoremap <Esc> <C-\><C-n>
+    " :tnoremap qq <C-\><C-n>
 endif
 
 " Autoclose the documentation window when choosing an option
@@ -143,10 +147,15 @@ map <leader>t :NERDTreeToggle<CR>
 let g:ale_lint_on_text_changed = 'never'
 " You can disable this option too
 " if you don't want linters to run on opening a file
-let g:ale_lint_on_enter = 0
+let g:ale_lint_on_enter = 1
 " Set flake to use python 2
 let g:ale_python_flake8_executable = 'python'
-let g:ale_python_flake8_options = '-m flake8'
+let g:ale_python_flake8_options = '-m flake8 --ignore E501'
+" Error and warning signs.
+let g:ale_sign_error = '⤫'
+let g:ale_sign_warning = '⚠'
+" Enable integration with airline.
+let g:airline#extensions#ale#enabled = 1
 
 " Sort
 vnoremap <Leader>s :sort<CR>
@@ -180,47 +189,34 @@ if has("nvim")
     set termguicolors
 endif
 
-
 " Automatic reloading of .vimrc
 autocmd! bufwritepost .vimrc source %
 
 "let g:EclimCompletionMethod = 'omnifunc'
-
-" Snippets configurarion
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 let g:deoplete#complete_method = 'completefunc'
 
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>"]
+autocmd FileType * 
+      \if &omnifunc != '' |
+      \call SuperTabChain(&omnifunc, "<c-p>") |
+      \call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+      \endif
 
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#close_popup() . "\<CR>"
-endfunction
-
-" Let <Tab> also do completion
-inoremap <silent><expr> <Tab>
-\ pumvisible() ? "\<C-n>" :
-\ deoplete#mappings#manual_complete()
-
-" Plugin key-mappings.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-"             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+imap <expr><TAB>
+ \ pumvisible() ? "\<C-n>" :
+ \ neosnippet#expandable_or_jumpable() ?
+ \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+ smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
 
 " For conceal markers.
 if has('conceal')
@@ -255,6 +251,8 @@ endfunction
 
 " Jedi-vim options
 "let g:jedi#use_splits_not_buffers = "right"
+let g:jedi#completions_enabled = 1
+let g:jedi#popup_on_dot = 0
 let g:jedi#use_tabs_not_buffers = 1
 autocmd FileType python setlocal completeopt-=preview
 
@@ -293,3 +291,18 @@ set showcmd
 
 " Update the highlighting of the last search
 nnoremap <leader>l :nohl<CR>
+
+" Go options
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_types = 1
+let g:go_auto_sameids = 1
+let g:go_fmt_command = "goimports"
+au FileType go nmap <leader>gt :GoDeclsDir<cr>
+
+let g:indentLine_setColors = 0
